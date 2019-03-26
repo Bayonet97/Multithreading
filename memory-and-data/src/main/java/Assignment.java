@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class AssignmentOne {
+public class Assignment {
 
     public static void main(String[] args) {
         int assignmentNum = 5;
