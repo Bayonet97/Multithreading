@@ -52,11 +52,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kochfractal/src/main/java/module-info.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="64">
-              <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/memory-and-data/src/main/java/AssignmentOne.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="571">
+              <caret line="86" column="9" lean-forward="true" selection-start-line="86" selection-start-column="9" selection-end-line="86" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -83,7 +92,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -102,6 +111,41 @@
               <item name="memory" type="b2602c69:ProjectViewProjectNode" />
               <item name="FUN-Multithreading" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="memory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FUN-Multithreading" type="462c0819:PsiDirectoryNode" />
+              <item name="kochfractal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="memory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FUN-Multithreading" type="462c0819:PsiDirectoryNode" />
+              <item name="kochfractal" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="memory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FUN-Multithreading" type="462c0819:PsiDirectoryNode" />
+              <item name="kochfractal" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="memory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FUN-Multithreading" type="462c0819:PsiDirectoryNode" />
+              <item name="kochfractal" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="memory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FUN-Multithreading" type="462c0819:PsiDirectoryNode" />
+              <item name="kochfractal" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="fun3kochfractalfx" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -113,21 +157,23 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553590465720" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553590941112" />
     <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Fontys/Jaar 2/Semester 3/FUN/Les 6/FUN3_KochFractal-master/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Git\FUN-Multithreading\memory-and-data\src\main" />
       <recent name="D:\Git\FUN-Multithreading\koch-fractals" />
       <recent name="D:\Git\FUN-Multithreading\koch-fractals\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Git\FUN-Multithreading\memory-and-data\src\main\java" />
       <recent name="D:\Git\FUN-Multithreading" />
     </key>
   </component>
@@ -144,6 +190,13 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.FUN3KochFractalFX">
+    <configuration name="AssignmentOne (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AssignmentOne" />
+      <module name="memory-and-data" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AssignmentOne" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AssignmentOne" />
       <module name="FUN-Multithreading" />
@@ -167,6 +220,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.FUN3KochFractalFX" />
+        <item itemvalue="Application.AssignmentOne (1)" />
         <item itemvalue="Application.AssignmentOne" />
       </list>
     </recent_temporary>
@@ -190,11 +244,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5059000" />
+    <option name="totallyTimeSpent" value="5566000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26066098" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -245,7 +298,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Memory-And-Data/src/main/java/AssignmentOne.java">
+    <entry file="file://$PROJECT_DIR$/memory-and-data/src/main/java/AssignmentOne.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/kochfractal/src/main/java/calculate/Edge.java">
@@ -276,10 +329,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/memory-and-data/src/main/AssignmentOne">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-48" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/kochfractal/src/main/java/module-info.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
-          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memory-and-data/src/main/java/AssignmentOne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="86" column="9" lean-forward="true" selection-start-line="86" selection-start-column="9" selection-end-line="86" selection-end-column="9" />
         </state>
       </provider>
     </entry>
