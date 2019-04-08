@@ -6,15 +6,12 @@ package calculate;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import fun3kochfractalfx.FUN3KochFractalFX;
 import timeutil.TimeStamp;
 
-/**
- *
- * @author Nico Kuijpers
- * Modified for FUN3 by Gertjan Schouten
- */
 public class KochManager {
     
     private KochFractal koch;
@@ -22,6 +19,12 @@ public class KochManager {
     private FUN3KochFractalFX application;
     private TimeStamp tsCalc;
     private TimeStamp tsDraw;
+    // TODO: Instantiate each KochFractal instance in Thread from Threadpool. Countdown when a thread is done. Interrupt calculations when next level is pressed.
+    private KochFractal leftCalculator;
+    private KochFractal bottomCalculator;
+    private KochFractal rightCalculator;
+    private ExecutorService executorService;
+    private CountDownLatch threadCountDown;
 
     public KochManager(FUN3KochFractalFX application) {
         this.edges = new ArrayList<Edge>();
@@ -29,6 +32,7 @@ public class KochManager {
         this.application = application;
         this.tsCalc = new TimeStamp();
         this.tsDraw = new TimeStamp();
+        executorService = Executors.newFixedThreadPool(3);
     }
     
     public void changeLevel(int nxt){
@@ -36,7 +40,6 @@ public class KochManager {
         koch.setLevel(nxt);
         tsCalc.init();
         tsCalc.setBegin("Begin calculating");
-        final int[] count = {0};
 
         Thread t1 = new Thread(new Runnable() {
             @Override
@@ -44,7 +47,6 @@ public class KochManager {
                 try {
                     koch.generateLeftEdge();
                     Thread.sleep(200);
-                    count[0]++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +59,6 @@ public class KochManager {
                 try {
                     koch.generateBottomEdge();
                     Thread.sleep(200);
-                    count[0]++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -69,36 +70,15 @@ public class KochManager {
                 try {
                     koch.generateRightEdge();
                     Thread.sleep(200);
-                    count[0]++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-
         t1.start();
         t2.start();
         t3.start();
-        /*
-        try {
-            synchronized (t1) {
-                System.out.println("Waiting for t1 to complete...");
-                t1.wait();
-            }
-            synchronized (t2) {
-                System.out.println("Waiting for t2 to complete...");
-                t2.wait();
-            }
-            synchronized (t3) {
-                System.out.println("Waiting for t3 to complete...");
-                t3.wait();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
-        do{}while(t1.isAlive() && t2.isAlive() && t3.isAlive());
 
             tsCalc.setEnd("End calculating");
             application.setTextNrEdges("" + koch.getNrOfEdges());
