@@ -36,55 +36,48 @@ public class KochManager {
     }
     
     public void changeLevel(int nxt){
+        if(leftCalculator != null && bottomCalculator != null && rightCalculator != null){
+            leftCalculator.cancel();
+            bottomCalculator.cancel();
+            rightCalculator.cancel();
+        }
+
         edges.clear();
         koch.setLevel(nxt);
         tsCalc.init();
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+        leftCalculator = new KochFractal(this);
+
+        bottomCalculator = new KochFractal(this);
+
+        rightCalculator = new KochFractal(this);
+
+
         tsCalc.setBegin("Begin calculating");
 
-        Thread t1 = new Thread(new Runnable() {
+        executorService.execute(new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    koch.generateLeftEdge();
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                leftCalculator.generateLeftEdge();
             }
-        });
-
-        Thread t2 = new Thread(new Runnable() {
+        }));
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    koch.generateBottomEdge();
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                bottomCalculator.generateBottomEdge();
             }
         });
-        Thread t3 = new Thread(new Runnable() {
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    koch.generateRightEdge();
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                rightCalculator.generateRightEdge();
             }
         });
+        tsCalc.setEnd("End calculating");
+        application.setTextNrEdges("" + koch.getNrOfEdges());
+        application.setTextCalc(tsCalc.toString());
 
-        t1.start();
-        t2.start();
-        t3.start();
-
-            tsCalc.setEnd("End calculating");
-            application.setTextNrEdges("" + koch.getNrOfEdges());
-            application.setTextCalc(tsCalc.toString());
-
-            application.requestDrawEdges();
+        application.requestDrawEdges();
     }
 
     public void drawEdges() {
