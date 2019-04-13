@@ -4,6 +4,8 @@
  */
 package calculate;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -24,6 +26,7 @@ public class KochManager {
     private KochFractal rightCalculator;
     private ExecutorService executorService;
     private CountDownLatch threadCountDown;
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     public KochManager(FUN3KochFractalFX application) {
         this.edges = new ArrayList<Edge>();
@@ -35,9 +38,9 @@ public class KochManager {
     
     public void changeLevel(int nxt){
         if(leftCalculator != null && bottomCalculator != null && rightCalculator != null){
-            leftCalculator.cancel();
-            bottomCalculator.cancel();
-            rightCalculator.cancel();
+            leftCalculator.cancelCalculation();
+            bottomCalculator.cancelCalculation();
+            rightCalculator.cancelCalculation();
         }
 
         edges.clear();
@@ -45,10 +48,17 @@ public class KochManager {
         tsCalc.init();
         threadCountDown = new CountDownLatch(3);
 
-        // TODO: Implement observer pattern so that KochFractal follows SOLID
-        leftCalculator = new KochFractal(this);
-        bottomCalculator = new KochFractal(this);
-        rightCalculator = new KochFractal(this);
+        leftCalculator = new KochFractal(propertyChangeSupport,this);
+        bottomCalculator = new KochFractal(propertyChangeSupport, this);
+        rightCalculator = new KochFractal(propertyChangeSupport, this);
+
+        application.bindLeftProgressProperty(leftCalculator);
+        application.bindLeftProgressProperty(bottomCalculator);
+        application.bindLeftProgressProperty(rightCalculator);
+
+        leftCalculator.addChangeListener("doneLeft", this::countDown);
+        bottomCalculator.addChangeListener("doneBottom", this::countDown);
+        rightCalculator.addChangeListener("doneRight", this::countDown);
 
         leftCalculator.setLevel(nxt);
         bottomCalculator.setLevel(nxt);
@@ -56,37 +66,19 @@ public class KochManager {
 
         tsCalc.setBegin("Begin calculating");
 
-        executorService.execute(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                leftCalculator.generateLeftEdge();
-                countDown();
-            }
-        }));
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                bottomCalculator.generateBottomEdge();
-                countDown();
-            }
-        });
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                rightCalculator.generateRightEdge();
-                countDown();
-            }
-        });
+        executorService.execute(new Thread((Runnable) () -> leftCalculator.generateLeftEdge()));
+        executorService.execute(new Thread((Runnable) () -> leftCalculator.generateBottomEdge()));
+        executorService.execute(new Thread((Runnable) () -> leftCalculator.generateRightEdge()));
     }
 
-    private void countDown() {
+    private void countDown(PropertyChangeEvent propertyChangeEvent) {
         threadCountDown.countDown();
         if (threadCountDown.getCount() == 0) {
             try {
                 tsCalc.setEnd("End calculating");
-                edges.addAll(leftCalculator.getEdges());
-                edges.addAll(bottomCalculator.getEdges());
-                edges.addAll(rightCalculator.getEdges());
+                edges.addAll((ArrayList<Edge>)leftCalculator.call());
+                edges.addAll((ArrayList<Edge>)bottomCalculator.call());
+                edges.addAll((ArrayList<Edge>)rightCalculator.call());
             } catch (Exception e) {
                 e.printStackTrace();
             }

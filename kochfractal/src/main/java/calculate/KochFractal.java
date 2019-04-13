@@ -4,18 +4,22 @@
  */
 package calculate;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+import javafx.concurrent.Task;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author Peter Boots
  * Modified for FUN3 by Gertjan Schouten
  */
-public class KochFractal {
+public class KochFractal extends Task{
 
+    private final PropertyChangeSupport propertyChangeSupport;
     private int level = 1;      // The current level of the fractal
     private int nrOfEdges = 3;  // The number of edges in the current level of the fractal
     private float hue;          // Hue value of color for next edge
@@ -23,14 +27,14 @@ public class KochFractal {
     private KochManager manager;
     private ArrayList<Edge> edges;
 
-    public KochFractal(KochManager manager) {
+    public KochFractal(PropertyChangeSupport propertyChangeSupport, KochManager manager) {
+        this.propertyChangeSupport = propertyChangeSupport;
         this.manager = manager;
     }
 
     private void drawKochEdge(double ax, double ay, double bx, double by, int n) {
         if (!cancelled) {
             if (n == 1) {
-
                 hue = hue + 1.0f / nrOfEdges;
                 Edge e = new Edge(ax, ay, bx, by, Color.hsb(hue*360.0, 1.0, 1.0));
                 edges.add(e);
@@ -48,26 +52,33 @@ public class KochFractal {
             }
         }
     }
-
     public synchronized void generateLeftEdge() {
         hue = 0f;
         cancelled = false;
         drawKochEdge(0.5, 0.0, (1 - Math.sqrt(3.0) / 2.0) / 2, 0.75, level);
+        propertyChangeSupport.firePropertyChange("doneLeft", null, null);
     }
 
     public synchronized void generateBottomEdge() {
         hue = 1f / 3f;
         cancelled = false;
         drawKochEdge((1 - Math.sqrt(3.0) / 2.0) / 2, 0.75, (1 + Math.sqrt(3.0) / 2.0) / 2, 0.75, level);
+        propertyChangeSupport.firePropertyChange("doneBottom", null, null);
     }
 
     public synchronized void generateRightEdge() {
         hue = 2f / 3f;
         cancelled = false;
         drawKochEdge((1 + Math.sqrt(3.0) / 2.0) / 2, 0.75, 0.5, 0.0, level);
+        propertyChangeSupport.firePropertyChange("doneRight", null, null);
+    }
+
+    @Override
+    protected Object call() throws Exception {
+        return edges;
     }
     
-    public void cancel() {
+    public void cancelCalculation() {
         cancelled = true;
         Thread.currentThread().interrupt();
     }
@@ -77,7 +88,9 @@ public class KochFractal {
         nrOfEdges = (int) (3 * Math.pow(4, level - 1));
         edges = new ArrayList<>();
     }
-
+    public void addChangeListener(String property, PropertyChangeListener propertyChangeListener) {
+        propertyChangeSupport.addPropertyChangeListener(property, propertyChangeListener);
+    }
     public int getLevel() {
         return level;
     }
