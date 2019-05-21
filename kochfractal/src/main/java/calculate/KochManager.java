@@ -53,8 +53,8 @@ public class KochManager {
         rightCalculator = new KochFractal(propertyChangeSupport, this);
 
         application.bindLeftProgressProperty(leftCalculator);
-        application.bindLeftProgressProperty(bottomCalculator);
-        application.bindLeftProgressProperty(rightCalculator);
+        application.bindBottomProgressProperty(bottomCalculator);
+        application.bindRightProgressProperty(rightCalculator);
 
         leftCalculator.addChangeListener("doneLeft", this::countDown);
         bottomCalculator.addChangeListener("doneBottom", this::countDown);
@@ -66,9 +66,9 @@ public class KochManager {
 
         tsCalc.setBegin("Begin calculating");
 
-        executorService.execute(new Thread((Runnable) () -> leftCalculator.generateLeftEdge()));
-        executorService.execute(new Thread((Runnable) () -> leftCalculator.generateBottomEdge()));
-        executorService.execute(new Thread((Runnable) () -> leftCalculator.generateRightEdge()));
+        executorService.submit(new Thread((Runnable) () -> leftCalculator.generateLeftEdge()));
+        executorService.submit(new Thread((Runnable) () -> bottomCalculator.generateBottomEdge()));
+        executorService.submit(new Thread((Runnable) () -> rightCalculator.generateRightEdge()));
     }
 
     private void countDown(PropertyChangeEvent propertyChangeEvent) {
@@ -76,18 +76,20 @@ public class KochManager {
         if (threadCountDown.getCount() == 0) {
             try {
                 tsCalc.setEnd("End calculating");
+
                 edges.addAll((ArrayList<Edge>)leftCalculator.call());
                 edges.addAll((ArrayList<Edge>)bottomCalculator.call());
                 edges.addAll((ArrayList<Edge>)rightCalculator.call());
+
+
+                Platform.runLater(() -> {
+                    application.setTextNrEdges(String.valueOf(leftCalculator.getNrOfEdges()));
+                    application.setTextCalc(tsCalc.toString());
+                });
+                application.requestDrawEdges();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            application.requestDrawEdges();
-            Platform.runLater(() -> {
-                application.setTextNrEdges(String.valueOf(leftCalculator.getNrOfEdges()));
-                application.setTextCalc(tsCalc.toString());
-            });
         }
     }
     public void drawEdges() {
